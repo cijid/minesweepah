@@ -37,7 +37,7 @@ it("all cells in the grid with default dimensions", () => {
   // Assert
   //  Check if all cells are in grid
   const cells = screen.getAllByRole("button");
-  expect(cells).toHaveLength(64);
+  expect(cells).toHaveLength(100);
 })
 
 it("On-left click the button clears cell or interacts with bomb", () => {

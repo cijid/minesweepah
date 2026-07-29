@@ -13,6 +13,7 @@ function GameBoard({ board }) {
   const [boardDimensions, setBoardDimensions] = useState([]);
 
 
+  //Create Array of Arrays
   useEffect(() => {
     const mineBoard = [];
 
@@ -37,7 +38,7 @@ function GameBoard({ board }) {
         role="grid"
         style={{
           gridTemplateColumns: `repeat(${boardWidth}, 60px)`,
-          gridTemplateRows: `repeat(${boardWidth}, 60px)`,
+          gridTemplateRows: `repeat(${boardHeight}, 60px)`,
         }}
       >
         {boardDimensions.map((row, rowIndex) =>
@@ -46,15 +47,6 @@ function GameBoard({ board }) {
           ))
         )}
       </div>
-
-
-
-
-
-
-
-
-
     </>
   )
 }

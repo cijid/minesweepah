@@ -9,12 +9,40 @@ import { Link, Route, Routes} from 'react-router-dom'
 
 function App() {
   const [gameState, setGameState] = useState(null)
-  const [board, setBoard] = useState([8,8])
+  const [board, setBoard] = useState([10,10])
+  const [boardHeightInput, setBoardHeightInput] = useState("10");
+  const [boardWidthInput, setBoardWidthInput] = useState("10");
+
+  const handleChangeBoardHeight = (event) => {
+    event.preventDefault();
+    const newHeight = boardHeightInput;
+    setBoard([newHeight, board[1]]);
+
+
+  }
+
+    const handleChangeBoardWidth = (event) => {
+    event.preventDefault();
+    const newWidth = boardWidthInput;
+    setBoard([board[0], newWidth]);
+
+
+  }
 
   return (
     <>
     <h1 className="gameName">Minesweeper</h1>
     <GameBoard board={board}/>
+    <form onSubmit={handleChangeBoardHeight}>
+      <input type="text" value={boardHeightInput} onChange={(event) => setBoardHeightInput(event.target.value)} placeholder="Enter a value if you so wish dude"/>
+      <button type="submit">Change yo height homie</button>
+
+    </form>
+    <form onSubmit={handleChangeBoardWidth}>
+      <input type="text" value={boardWidthInput} onChange={(event) => setBoardWidthInput(event.target.value)} placeholder="Enter a value if you so wish dude"/>
+      <button type="submit">Get Skinny</button>
+
+    </form>
     </>
   )
 }

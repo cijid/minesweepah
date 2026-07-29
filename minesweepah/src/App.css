@@ -182,3 +182,16 @@
     border-right-color: var(--border);
   }
 }
+
+
+.td {
+  border: 1px solid;
+  width: 2em;
+  height: 2em;
+}
+
+.mineCell {
+  height: 2em;
+  width: 1em;
+  background: #eee;
+}

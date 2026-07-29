@@ -20,10 +20,4 @@ describe("App Functionality", () => {
     expect (screen.getByText("Minesweeper")).toBeInTheDocument();
   });
 
-
-
-
-
-
-
-});
+})

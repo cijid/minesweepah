@@ -34,6 +34,7 @@ function GameBoard({ board }) {
       <p>Height: {boardHeight} and Width: {boardWidth} </p>
       <div
         className="msBoard"
+        role="grid"
         style={{
           gridTemplateColumns: `repeat(${boardWidth}, 60px)`,
           gridTemplateRows: `repeat(${boardWidth}, 60px)`,

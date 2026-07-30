@@ -28,6 +28,15 @@ function GameBoard({ board }) {
     setBoardDimensions(mineBoard);
   }, [boardHeight, boardWidth]);
 
+  const selectedCell = (clickX, clickY) => {
+    boardDimensions.map((row, rowIndex) =>
+      row.map((cell) => {
+        if (cell.x === clickX && cell.y === clickY) {
+          return { ...cell }
+        }
+      })
+    )
+  }
 
 
   return (
@@ -43,7 +52,7 @@ function GameBoard({ board }) {
       >
         {boardDimensions.map((row, rowIndex) =>
           row.map((hasMine, columnIndex) => (
-            <Cell key={`${rowIndex}-${columnIndex}`} x={columnIndex} y={rowIndex} hasMine={hasMine}/>
+            <Cell key={`${rowIndex}-${columnIndex}`} x={columnIndex} y={rowIndex} hasMine={hasMine} selectedCell={selectedCell} />
           ))
         )}
       </div>

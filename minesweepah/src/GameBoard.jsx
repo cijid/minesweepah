@@ -7,38 +7,43 @@ import './gameboard.css'
 import Cell from './Cell'
 import Timer from './Timer'
 
-function GameBoard({ board, gameState, setGameState }) {
+//Displays and manages the gameboard
+function GameBoard({ board, gameState, setGameState, addMines }) {
   const boardHeight = board[0]
   const boardWidth = board[1]
   const [boardDimensions, setBoardDimensions] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
 
 
-  //Create Array of Arrays to generate grid
+  //Creates array of array for grid
   useEffect(() => {
     const mineBoard = [];
     for (let row = 0; row < boardHeight; row++) {
       mineBoard[row] = [];
       for (let column = 0; column < boardWidth; column++) {
 
-  // Creates an object representing each grid square
+        // Creates an object representing each grid square
         mineBoard[row][column] = {
           x: column,
           y: row,
           hasMine: false,
           isSelected: false,
+          nearbyMines: 0,
 
         }
       }
     }
+    //Saves board in state and updates only when board dimensions change
     setBoardDimensions(mineBoard);
   }, [boardHeight, boardWidth]);
 
   //Handles Cell Selection
-  const selectedCell = (clickX, clickY) => {
-  //Causes timer to start
-  const firstClick = !gameStarted
+  const selectedCell = (clickX, clickY, clickedCell) => {
+    //Causes timer to start
+    const firstClick = !gameStarted
 
+
+    //Updates clicked cell to mark as selected
     setBoardDimensions(boardDimensions.map((row, rowIndex) =>
       row.map((cell) => {
         if (cell.x === clickX && cell.y === clickY) {
@@ -50,43 +55,49 @@ function GameBoard({ board, gameState, setGameState }) {
         return cell;
       })
     )
-  )
-  if (firstClick) {
-    //Handles adding mines
-  const addMines = () => {
-    setBoardDimensions((currentBoard) => {
-    const minedBoard = currentBoard.map((row, rowIndex) =>
-      row.map((cell) => {
-        return { ...cell }
-      }))
+    )
+    if (firstClick) {
+      // Handles adding mines
+      const addMines = () => {
+        setBoardDimensions((currentBoard) => {
+          const minedBoard = currentBoard.map((row, rowIndex) =>
+            row.map((cell) => {
+              return { ...cell }
+            }))
 
-//Add mine count to board
-//  Need to come back and make this dynamic based on difficulty selected
-    const minesDeploy = boardHeight * boardWidth
-    let totalMines = Math.min(10, minesDeploy)
-    let mines = 0
+          //Add mine count to board
+          //  Need to come back and make this dynamic based on difficulty selected
+          const minesDeploy = boardHeight * boardWidth
+          let totalMines = Math.min(10, minesDeploy)
+          let mines = 0
 
-    // Deploy the mines to the board in random locations.
-    while (mines < totalMines) {
-      const randomRow = Math.floor((Math.random() * boardHeight))
-      const randomCol = Math.floor((Math.random() * boardWidth))
-      if (!minedBoard[randomRow][randomCol].hasMine) {
-        minedBoard[randomRow][randomCol].hasMine = true
-        console.log("Mines are located here: ",minedBoard[randomRow][randomCol])
-        mines++;
+          // Deploy the mines to the board in random locations.
+          while (mines < totalMines) {
+            const randomRow = Math.floor((Math.random() * boardHeight))
+            const randomCol = Math.floor((Math.random() * boardWidth))
+            if (!minedBoard[randomRow][randomCol].hasMine) {
+              minedBoard[randomRow][randomCol].hasMine = true
+              console.log("Mines are located here: ", minedBoard[randomRow][randomCol])
+              mines++;
+            }
+          }
+
+          return minedBoard;
+        })
       }
+      addMines()
     }
-    return minedBoard;
-    })
-  }
 
-addMines()
-  }
 
-      if (firstClick){
+
+    if (firstClick) {
       setGameStarted(true)
     }
-    console.log(`Cell: x=${clickX}, y=${clickY}`)
+
+
+
+
+    console.log(`Cell: x=${clickX}, y=${clickY}, Selection =${clickedCell}`)
   }
 
 
@@ -108,7 +119,16 @@ addMines()
       >
         {boardDimensions.map((row) =>
           row.map((cell) => (
-            <Cell key={`${cell.y}-${cell.x}`} x={cell.x} y={cell.y} hasMine={cell.hasMine} selectedCell={selectedCell} isSelected={cell.isSelected}/>
+            <Cell key={`${cell.x}-${cell.y}`}
+              x={cell.x}
+              y={cell.y}
+              hasMine={cell.hasMine}
+              selectedCell={selectedCell}
+              isSelected={cell.isSelected}
+              nearbyMines={cell.nearbyMines}
+              gameState={gameState}
+              setGameState={setGameState}
+            />
           ))
         )}
       </div>

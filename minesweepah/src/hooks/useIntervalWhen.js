@@ -2,7 +2,7 @@ import { useRef, useEffect ,useEffectEvent, useCallback } from 'react'
 //Source: https://usehooks.com/useintervalwhen
 //Source GitHub: https://github.com/uidotdev/usehooks
 
-export function useIntervalWhen(cb, { ms, when, startImmediately }) {
+function useIntervalWhen(cb, { ms, when, startImmediately }) {
   const id = useRef(null);
   const onTick = useEffectEvent(cb);
   const immediatelyCalled = useRef(

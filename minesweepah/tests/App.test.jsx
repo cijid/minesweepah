@@ -37,39 +37,9 @@ it("all cells in the grid with default dimensions", () => {
   // Assert
   //  Check if all cells are in grid
   const cells = screen.getAllByRole("button");
-  expect(cells).toHaveLength(103);
+  expect(cells).toHaveLength(102);
 })
 
-it("Clicking Lets Go deploys mines to the board", async () => {
-  // Act
-  //  User clicks Lets go! and mines are deployed to the board in random locations
-  const user = userEvent.setup();
-  const button = screen.getByRole('button', {name: /lets go!/i})
-  await user.click(button)
-  // Assert
-  //  Check if mines are deployed
-  const cells = await screen.findAllByTestId("cell")
-  const cellsWithMines = cells.filter(
-    (cell) => cell.getAttribute("data-hasmine") === "true"
-  )
-
-  await expect(cellsWithMines).toHaveLength(10)
-})
-
-it("Left clicking on a cell selects it", async () => {
-  //Arrange
-  const user = userEvent.setup();
-  const cells = screen.getAllByTestId("cell")
-  const firstCell = cells[0]
-  expect(firstCell).toHaveAttribute("aria-pressed", "false")
-  // Act
-  //  User Clicks Cell
-  await user.click(firstCell)
-  // Assert
-  //  Check if cell is selected
-  expect(firstCell).toHaveAttribute("aria-pressed", "true")
-  expect(firstCell).toHaveClass("cell")
-})
 
 it("Selecting a cell to start the game deploys mines and starts the timer ", async () => {
   //Arrange
@@ -103,6 +73,21 @@ it("Selecting a cell to start the game deploys mines and starts the timer ", asy
   // Timer is active
   expect(timer).toHaveAttribute("data-timer", "true")
 
+})
+
+it("Left clicking on a cell selects it", async () => {
+  //Arrange
+  const user = userEvent.setup();
+  const cells = screen.getAllByTestId("cell")
+  const firstCell = cells[0]
+  expect(firstCell).toHaveAttribute("aria-pressed", "false")
+  // Act
+  //  User Clicks Cell
+  await user.click(firstCell)
+  // Assert
+  //  Check if cell is selected
+  expect(firstCell).toHaveAttribute("aria-pressed", "true")
+  expect(firstCell).toHaveClass("cell")
 })
 
 })

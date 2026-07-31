@@ -39,6 +39,7 @@ function App() {
     boardWidthInput={boardWidthInput}
     setBoardHeightInput={setBoardHeightInput}
     setBoardWidthInput={setBoardWidthInput}
+    gameState={gameState}
     />
     </>
   )

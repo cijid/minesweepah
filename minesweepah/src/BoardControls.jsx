@@ -1,22 +1,18 @@
 
 
 function BoardControls({ handleChangeBoardHeight, boardHeightInput,
-  handleChangeBoardWidth, boardWidthInput, setBoardHeightInput, setBoardWidthInput }){
-
-
-
-
+  handleChangeBoardWidth, boardWidthInput, setBoardHeightInput, setBoardWidthInput, gameState }){
 
     return (
       <>
-    <form onSubmit={handleChangeBoardHeight}>
-      <input type="text" value={boardHeightInput} onChange={(event) => setBoardHeightInput(event.target.value)} placeholder="Enter a value if you so wish dude"/>
-      <button type="submit">Change yo height homie</button>
+    <form onSubmit={handleChangeBoardHeight} disabled={gameState}>
+      <input type="text" value={boardHeightInput} onChange={(event) => setBoardHeightInput(event.target.value)} disabled={gameState} placeholder="Enter a value if you so wish dude"/>
+      <button type="submit" disabled={gameState}>Change Height</button>
 
     </form>
-    <form onSubmit={handleChangeBoardWidth}>
-      <input type="text" value={boardWidthInput} onChange={(event) => setBoardWidthInput(event.target.value)} placeholder="Enter a value if you so wish dude"/>
-      <button type="submit">Get Skinny</button>
+    <form onSubmit={handleChangeBoardWidth} disabled={gameState}>
+      <input type="text" value={boardWidthInput} onChange={(event) => setBoardWidthInput(event.target.value)} disabled={gameState} placeholder="Enter a value if you so wish dude"/>
+      <button type="submit" disabled={gameState}>Change Width</button>
     </form>
     </>
     )
